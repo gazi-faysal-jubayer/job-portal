@@ -1,0 +1,71 @@
+{% load static %}
+
+{% block body %}
+
+{% include 'recruiter_navigation.html'%}
+
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <section>
+                <h1 class="entry-title"><span>Change Company Logo</span> </h1>
+                <hr>
+                <form class="form-horizontal" onsubmit="return checkpass();" method="post" name="signup" id="signup"
+                    enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Job Title<span class="text-danger">*</span></label>
+                        <div class="col-md-8 col-sm-9">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                                <input type="text" class="form-control" name="jobtitle" id="jobtitle"
+                                    placeholder="Enter Job Taitle" value="{{job.title}}" required>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Company Logo</label>
+                        <div class="col-md-5 col-sm-8">
+                            <img src="{{job.image.url}}" width="100" height="90">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Change Company Logo<span class="text-danger"></span></label>
+                        <div class="col-md-8 col-sm-9">
+                            <input type="file" class="form-control" name="logo" id="logo" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-offset-3 col-xs-10">
+                            <input name="Submit" type="submit" value="Submit" class="btn btn-primary">
+                        </div>
+                    </div>
+                </form>
+        </div>
+    </div>
+</div>
+{% include 'footer.html' %}
+
+{% if error == "no" %}
+<script>
+  alert('Company Logo has been updated');
+  window.location = ("{% url 'change_companylogo' job.id%}")
+</script>
+{% endif %}
+
+{% if error == "yes" %}
+<script>
+  alert('Something went wrong!!');
+</script>
+{% endif %}
+
+{% endblock body %}

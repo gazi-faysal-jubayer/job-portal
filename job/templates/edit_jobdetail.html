@@ -1,0 +1,176 @@
+{% load static %}
+
+{% block body %}
+
+{% include 'recruiter_navigation.html'%}
+
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<style>
+    .box select {
+        background-color: #5596cb;
+        color: white;
+        padding: 12px;
+        width: 250px;
+        border: none;
+        font-size: 20px;
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+        -webkit-appearance: button;
+        appearance: button;
+        outline: none;
+      }
+      
+      .box::before {
+        content: "\f13a";
+        font-family: FontAwesome;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 20%;
+        height: 100%;
+        text-align: center;
+        font-size: 28px;
+        line-height: 45px;
+        color: rgba(255, 255, 255, 0.5);
+        background-color: rgba(255, 255, 255, 0.1);
+        pointer-events: none;
+      }
+      
+      .box:hover::before {
+        color: rgba(255, 255, 255, 0.6);
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+      
+      .box select option {
+        padding: 30px;
+      }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <section>
+                <h1 class="entry-title"><span>Edit Job Details</span> </h1>
+                <hr>
+                <form class="form-horizontal" onsubmit="return checkpass();" method="post" name="signup" id="signup"
+                    enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Job Title<span class="text-danger">*</span></label>
+                        <div class="col-md-8 col-sm-9">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                                <input type="text" class="form-control" name="jobtitle" id="jobtitle"
+                                    placeholder="Enter Job Taitle" value="{{job.title}}" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Job Catagory<span class="text-danger">*</span></label>
+                        <div class="col-md-8 col-sm-9">
+                            <div class="box">
+                                <select id="jobcatagory" name="jobcatagory">
+                                  <option value="Design & Creative">Design & Creative</option>
+                                  <option value="Design & Development">Design & Development</option>
+                                  <option value="Sales & Marketing">Sales & Marketing</option>
+                                  <option value="Mobile Application">Mobile Application</option>
+                                  <option value="Construction">Construction</option>
+                                  <option value="Information Technology">Information Technology</option>
+                                  <option value="Real Estate">Real Estate</option>
+                                  <option value="Content Writer">Content Writer</option>
+                                </select>
+                              </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Start Date<span class="text-danger">*</span></label>
+                        <div class="col-md-5 col-sm-8">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                <input type="date" class="form-control" name="startdate" id="startdate">
+                            </div>
+                            <small>[{{job.start_date}}] </small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">End Date<span class="text-danger">*</span></label>
+                        <div class="col-md-5 col-sm-8">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                <input type="date" class="form-control" name="enddate" id="enddate" value="">
+                            </div>
+                            <small>[{{job.end_date}}] </small>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Salary(Per Month)<span class="text-danger">*</span></label>
+                        <div class="col-md-8 col-sm-9">
+                            <input type="text" class="form-control" name="salary" id="salary" value="{{job.salary}}" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Company Logo</label>
+                        <div class="col-md-5 col-sm-8">
+                            <img src="{{job.image.url}}" width="100" height="90"> <a href="{% url 'change_companylogo' job.id%}">Change Company Logo</a>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Company Location<span class="text-danger"></span></label>
+                        <div class="col-md-8 col-sm-9">
+                            <input type="text" class="form-control" name="location" id="location" value="{{job.locations}}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Experience(In Years)<span class="text-danger"></span></label>
+                        <div class="col-md-8 col-sm-9">
+                            <input type="text" class="form-control" name="experience" id="experience" value="{{job.experience}}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Skills<span class="text-danger"></span></label>
+                        <div class="col-md-8 col-sm-9">
+                            <input type="text" class="form-control" name="skills" id="skills" value="{{job.skills}}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Discription<span class="text-danger"></span></label>
+                        <div class="col-md-8 col-sm-9">
+                            <textarea type="text" class="form-control" name="discription" id="discription"  required>{{job.description}}</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-offset-3 col-xs-10">
+                            <input name="Submit" type="submit" value="Submit" class="btn btn-primary">
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+</div>
+{% include 'footer.html' %}
+
+{% if error == "no" %}
+<script>
+  alert('Job detail has been updated');
+  window.location = ("{% url 'edit_jobdetail' job.id%}")
+</script>
+{% endif %}
+
+{% if error == "yes" %}
+<script>
+  alert('Something went wrong!!');
+</script>
+{% endif %}
+
+{% endblock body %}

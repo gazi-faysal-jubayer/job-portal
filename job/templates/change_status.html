@@ -1,0 +1,46 @@
+{% load static %}
+
+{% block body %}
+
+{% include 'admin_navigation.html'%}
+
+<div class="container">
+    <h1 class="entry-title"><span>Pending Recruiters</span> </h1>
+    <hr>
+    <form class="form-horizontal" onsubmit="return checkpass();" method="post" name="alogin" id="alogin"
+        enctype="multipart/form-data">
+        {% csrf_token %}
+        <!-- Email input -->
+        <div class="form-outline mb-4">
+            <label class="form-label" for="form1Example13">Recruiter Name</label>
+            <input type="text" id="rname" name="rname" class="form-control"
+                value="{{recruiter.user.first_name}} {{recruiter.user.last_name}}" >
+        </div>
+        <!-- Password input -->
+        <div class="form-outline mb-4">
+            <label class="form-label" for="form1Example23" name="uname">Status</label>
+            <select id="status" name="status">
+                <option value="Accept">Accept</option>
+                <option value="Reject">Reject</option>
+            </select>
+        </div>
+        <!-- Submit button -->
+        <input type="submit" value="Submit" class="btn btn-primary">
+    </form>
+</div>
+
+{% if error == "no" %}
+<script>
+    alert('Status changed successfull')
+    window.location = ("{% url 'recruiter_all' %}")
+</script>
+{% endif %}
+
+{% if error == "yes" %}
+<script>
+    alert('Something went Wrong!!');
+</script>
+{% endif %}
+
+
+{% endblock body %}

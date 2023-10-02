@@ -1,0 +1,82 @@
+{% load static %}
+
+{% block body %}
+
+{% include 'admin_navigation.html'%}
+
+<body>
+  <div class="content ym-4">
+
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-10">
+
+
+          <div class="row justify-content-center">
+            <div class="col-md-6">
+
+              <h3 class="heading mb-4">Let's talk about everything!</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas debitis, fugit natus?</p>
+
+              <p><img src="{% static 'img/undraw-contact.svg'%}" alt="Image" class="img-fluid"></p>
+
+
+            </div>
+            <div class="col-md-6">
+
+              <form class="form-horizontal" onsubmit="return checkpass();" method="post" id="contactForm"
+                name="contactForm" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="col-md-12 form-group">
+                  <input type="text" class="form-control" name="author" id="author" placeholder="Your name"
+                    value="Admin">
+                </div>
+                <div class="col-md-12 form-group">
+                  <input type="text" class="form-control" name="title" id="title" placeholder="Title" required>
+                </div>
+                <div class="col-md-12 form-group">
+                  <input type="text" class="form-control" name="slug" id="slug" placeholder="Slug" required>
+                </div>
+                <div class="col-md-12 form-group">
+                  <input type="text" class="form-control" name="tag" id="tag" placeholder="Tag (Highest 13 words)" required>
+                </div>
+                <div class="col-md-12 form-group">
+                  <textarea class="form-control" name="content" id="content" cols="30" rows="7"
+                    placeholder="Write your Blog" required></textarea>
+                </div>
+
+                <div class="text-center text-lg-start mt-4 pt-2">
+                  <input name="Submit" type="submit" value="Post" class="btn btn-primary">
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+</body>
+
+</html>
+
+{% include 'footer.html' %}
+
+{% if error == "no" %}
+<script>
+  alert('Blog has been added');
+  window.location = ("{% url 'admBlog' %}")
+</script>
+{% endif %}
+
+{% if error == "yes" %}
+<script>
+  alert('Something went wrong!!');
+</script>
+{% endif %}
+
+{% endblock body %}

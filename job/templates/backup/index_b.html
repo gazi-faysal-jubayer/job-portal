@@ -1,0 +1,26 @@
+<!-- index -->
+{% load static %}
+
+{% block body %}
+
+{% include 'navigation.html'%}
+
+<style>
+    .container{
+        max-width: 60%;
+    }
+</style>
+
+<div class="container-fluid" style="margin-top: 1%">
+    <img src="{% static 'images/job2.jpg' %}" style="height: 100%; width:100%">
+</div>
+
+
+
+
+</div>
+
+{% include 'footer.html' %}
+
+
+{% endblock %}

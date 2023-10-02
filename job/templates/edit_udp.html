@@ -1,0 +1,60 @@
+{% load static %}
+
+{% block body %}
+
+{% include 'user_navigation.html'%}
+
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <section>
+                <h1 class="entry-title"><span>Change Profile Picture</span> </h1>
+                <hr>
+                <form class="form-horizontal" onsubmit="return checkpass();" method="post" name="signup" id="signup"
+                    enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <div class="form-group">
+                        <label class="control-label col-sm-3"> {{jobseeker.user.first_name}} {{jobseeker.user.last_name}} </label>
+                        <div class="col-md-5 col-sm-8">
+                            <img src="{{jobseeker.image.url}}" width="100" height="90">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Change Profile Picture<span class="text-danger"></span></label>
+                        <div class="col-md-8 col-sm-9">
+                            <input type="file" class="form-control" name="logo" id="logo" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-offset-3 col-xs-10">
+                            <input name="Submit" type="submit" value="Submit" class="btn btn-primary">
+                        </div>
+                    </div>
+                </form>
+        </div>
+    </div>
+</div>
+
+
+{% if error == "no" %}
+<script>
+  alert('Profile Picture has been updated');
+  window.location = ("{% url 'user_home' %}")
+</script>
+{% endif %}
+
+{% if error == "yes" %}
+<script>
+  alert('Something went wrong!!');
+</script>
+{% endif %}
+
+{% endblock body %}

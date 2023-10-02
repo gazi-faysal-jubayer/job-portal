@@ -1,0 +1,56 @@
+{% load static %}
+
+{% block body %}
+
+{% include 'user_navigation.html'%}
+
+{% comment %} <script>
+    function checkpass()
+    {
+        if(document.signup.password.value!=document.signup.cpassword.value)
+        {
+            alert('Password and Confirm Password does not match!')
+            document.signup.cpassword.focus();
+            return false;
+        }
+        return true;
+    }
+</script> {% endcomment %}
+
+<div class="container">
+    <h1 class="entry-title"><span>Apply for Job</span> </h1>
+    <hr>
+    <form class="form-horizontal" onsubmit="return checkpass();" method="post" name="alogin" id="alogin"
+        enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-outline mb-4">
+            <label class="form-label" for="form1Example13">Upload Resume</label>
+            <input type="file" id="resume" name="resume" class="form-control">
+        </div>
+        <!-- Submit button -->
+        <input type="submit" value="Submit" class="btn btn-primary">
+    </form>
+</div>
+
+{% if error == "close" %}
+<script>
+    alert('Application Last Date is Over!!!')
+    window.location = ("{% url 'user_latestjobs' %}")
+</script>
+{% endif %}
+
+{% if error == "notopen" %}
+<script>
+    alert('Application Line is not opened!!!')
+    window.location = ("{% url 'user_latestjobs' %}")
+</script>
+{% endif %}
+
+{% if error == "done" %}
+<script>
+    alert('Job Application Submitted Successfully.')
+    window.location = ("{% url 'user_latestjobs' %}")
+</script>
+{% endif %}
+
+{% endblock body %}

@@ -1,0 +1,65 @@
+{% load static %}
+
+{% block body %}
+
+{% include 'navigation.html'%}
+
+
+<div class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="search-result-box card-box">
+                    <div class="row">
+                        <div class="col-md-8 offset-md-2">
+                            <div class="pt-3 pb-4">
+                                <div class="mt-4 text-center">
+                                    <h1>Search Results</h1></div>
+                                    <hr>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-striped" id="example">
+                        <tbody style="background-color: gold;">
+                            {% for i in products %}
+                            <tr>
+                                <div class="single-job-items mb-30">
+                                    <div class="job-items">
+                                        <div class="company-img">
+                                            <a href="{% url 'job_detail' i.id%}"><img src="{{i.recruiter.image.url}}"
+                                                    style="width:100px ; height: 100px; border-radius:50%" alt=""></a>
+                                        </div>
+                                        <div class="job-tittle">
+                                            <a href="{% url 'job_detail' i.id%}">
+                                                <h4>{{i.title}}</h4>
+                                            </a>
+                                            <ul>
+                                                <li>{{i.recruiter.company}}</li>
+                                                <li><i class="fas fa-map-marker-alt"></i>{{i.locations}}</li>
+                                                <li>${{i.salary}}</li>
+                                            </ul>
+                                            <ul> {{i.start_date}} - {{i.end_date}} </ul>
+                                        </div>
+                                    </div>
+                                    <div class="items-link f-right">
+                                        <a href="{% url 'user_login' %}" >Login to Apply</a> 
+                                        <span>{{i.creationdate}}</span>
+                                    </div>
+                                </div>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- container -->
+</div>
+
+
+
+
+
+{% endblock %}

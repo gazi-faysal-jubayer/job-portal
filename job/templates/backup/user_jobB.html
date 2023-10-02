@@ -1,0 +1,47 @@
+{% load static %}
+
+{% block body %}
+
+{% include 'user_navigation.html'%}
+
+<!-- <style>
+    tr{text-align: center}
+</style> -->
+
+<div class="container">
+    <h1 class="entry-title"><span>Latest Job List</span> </h1>
+    <hr>
+    <table class="table table-striped" id="example">
+        <thead style="background-color: blueviolet; text-align:center;">
+            <tr>
+                <th>S.No.</th>
+                <th>Company Name</th>
+                <th>Job Title</th>
+                <th>Location</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody style="background-color: gold;">
+            {% for i in data %}
+            <tr>
+                <th>{{forloop.counter}}</th>
+                <td>{{i.recruiter.company}}</td>
+                <td>{{i.title}}</td>
+                <td>{{i.loction}}</td>
+                <td>{{i.start_date}}</td>
+                <td>{{i.end_date}}</td>
+                {% if i.id in li %}
+                <td>Applied</td>
+                {% else %}
+                <td><a href="{% url 'job_detail' i.id%}" class="btn btn-success">Apply</a>
+                </td>
+                {% endif %}
+
+            </tr>
+            {% endfor %}
+        </tbody>
+</div>
+
+{% endblock body %}
